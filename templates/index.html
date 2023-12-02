@@ -16,9 +16,6 @@
             <div>
                 <button onclick="refresh()">refresh</button>
             </div>
-            {% comment %} <div>
-                <button onclick="get_windspeed()">Get Wind Speed</button>
-            </div> {% endcomment %}
         </div>
         <div id="result">
         </div>
@@ -32,13 +29,13 @@
                     let result = document.querySelector("#result");
                     if (data != "fail") {
                         const json = JSON.parse(data)
-                        result.innerHTML = "<h3>새로고침된 시간:" + json.Now + json.DebugNumber "</h3>";
+                        result.innerHTML = "<h3>새로고침된 시간:" + json.Now + json.DebugNumber + "</h3>";
                     } else {
                         result.innerHTML = "<h1>error</h1>";
                     }
                 });
         }
-        {% comment %} function get_temperature() {
+        function get_temperature() {
             fetch("/get/temperature")
                 .then(response => response.text())
                 .then(data => {
@@ -65,7 +62,7 @@
                         result.innerHTML = "<h1>error</h1>";
                     }
                 });
-        } {% endcomment %}
+        }
     </script>
 </body>
 
