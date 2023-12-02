@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>HOME NETWORK</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>온도</h2>
+        </div>
+        <div class="main">
+            <div>
+                <button onclick="refresh()">refresh</button>
+            </div>
+            {% comment %} <div>
+                <button onclick="get_windspeed()">Get Wind Speed</button>
+            </div> {% endcomment %}
+        </div>
+        <div id="result">
+        </div>
+    </div>
+    <script>
+        function refresh() {
+            fetch("/refresh")
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    let result = document.querySelector("#result");
+                    if (data != "fail") {
+                        const json = JSON.parse(data)
+                        result.innerHTML = "<h3>새로고침된 시간:" + json.Now + "</h3>";
+                    } else {
+                        result.innerHTML = "<h1>error</h1>";
+                    }
+                });
+        }
+        {% comment %} function get_temperature() {
+            fetch("/get/temperature")
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    let result = document.querySelector("#result");
+                    if (data != "fail") {
+                        const json = JSON.parse(data)
+                        result.innerHTML = "<h3>Date: " + json.Date + ", Time: " + json.Time + ", Temperature (C): " + json.Temperature +"</h3>";
+                    } else {
+                        result.innerHTML = "<h1>error</h1>";
+                    }
+                });
+        }
+        function get_windspeed() {
+            fetch("/get/windspeed")
+                .then(response => response.text())
+                .then(data => {
+                    console.log(data);
+                    let result = document.querySelector("#result");
+                    if (data != "fail") {
+                        const json = JSON.parse(data)
+                        result.innerHTML = "<h3>Date: " + json.Date + ", Time: " + json.Time + ", Wind speed (m/s): " + json.windspeed +"</h3>";
+                    } else {
+                        result.innerHTML = "<h1>error</h1>";
+                    }
+                });
+        } {% endcomment %}
+    </script>
+</body>
+
+</html>
